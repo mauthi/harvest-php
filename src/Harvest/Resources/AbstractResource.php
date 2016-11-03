@@ -15,6 +15,7 @@ abstract class AbstractResource
 {
     private $_connection;
     protected $_uri;
+    protected $_data;
 
     /**
      * AbstractResource constructor.
@@ -32,6 +33,17 @@ abstract class AbstractResource
     public function getAll()
     {
         return $this->_connection->request('GET', $this->_uri);
+    }
+
+    /**
+     * @return integer Id of created object
+     */
+    public function create()
+    {
+        $options = array();
+        $options['json'] = $this->_data;
+        $result = $this->_connection->request('POST', $this->_uri, $options);
+        return $result;
     }
 
     /**

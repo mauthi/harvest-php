@@ -11,6 +11,7 @@ namespace Harvest\Resources;
 class Clients extends AbstractResource implements ResourceInterface
 {
 	const HARVEST_PATH = 'clients';
+    const RESOURCE_NAME = 'client';
 
 	/**
      * @param string|DateTime $updatedSince
@@ -50,5 +51,17 @@ class Clients extends AbstractResource implements ResourceInterface
         });
 
         return $actives;
+    }
+
+    /**
+     * @param array $data
+     * @return integer New Id
+     */
+    public function createClient(array $data) {
+        $this->_uri = self::HARVEST_PATH;
+
+        $this->_data = array();
+        $this->_data[self::RESOURCE_NAME] = $data;
+        return parent::create();
     }
 }
