@@ -86,10 +86,14 @@ class Connection
         $options['headers']['Authorization'] = 'Basic (' . base64_encode( $this->_options['username'] . ":" . $this->_options['password'] ). ')';
         $response = $client->request($method, $url, $options);
 
-        if ($method == "POST")
-            return $response->getHeader("Location");
-
-        return (string)$response->getBody();
+        switch ($method) {
+            case "POST":
+            case "PUT":
+                return $response;
+            default:
+                return (string)$response->getBody();
+            
+        }
     }
 
     /**

@@ -43,10 +43,19 @@ abstract class AbstractResource
         $options = array();
         $options['json'] = $this->_data;
         $response = $this->_connection->request('POST', $this->_uri, $options);
-        if ($response->getStatusCode() == 201 && isset($response[0])) {
-            $location = $response[0];
+        if ($response->getStatusCode() == 201 && $location = $this->getLocationFromResponse($response)) {
             return $this->_connection->request('GET', $location);
         } 
+        return false;
+    }
+
+
+    private function getLocationFromResponse($response) 
+    {
+        $aLocation = $response->getHeader("Location");
+        if (isset($aLocation[0]))
+            return $aLocation[0];
+
         return false;
     }
 
@@ -59,8 +68,7 @@ abstract class AbstractResource
         $options = array();
         $options['json'] = $this->_data;
         $response = $this->_connection->request('PUT', $this->_uri, $options);
-        if ($response->getStatusCode() == 200 && isset($response[0])) {
-            $location = $response[0];
+        if ($response->getStatusCode() == 200 && $location = $this->getLocationFromResponse($response)) {
             return $this->_connection->request('GET', $location);
         } 
         return false;
