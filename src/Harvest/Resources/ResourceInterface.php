@@ -14,4 +14,5 @@ interface ResourceInterface
     public function getInactive();
     public function getActive();
     public function create();
+    public function update();
 }

@@ -36,18 +36,34 @@ abstract class AbstractResource
     }
 
     /**
-     * @return array Array of created resource or false if no location is returned
+     * @return array Array of created resource or false
      */
     public function create()
     {
         $options = array();
         $options['json'] = $this->_data;
-        $result = $this->_connection->request('POST', $this->_uri, $options);
-        if (isset($result[0])) {
-            $location = $result[0];
+        $response = $this->_connection->request('POST', $this->_uri, $options);
+        if ($response->getStatusCode() == 201 && isset($response[0])) {
+            $location = $response[0];
             return $this->_connection->request('GET', $location);
         } 
-        return $result;
+        return false;
+    }
+
+
+    /**
+     * @return array Array of updated resource or false
+     */
+    public function update()
+    {
+        $options = array();
+        $options['json'] = $this->_data;
+        $response = $this->_connection->request('PUT', $this->_uri, $options);
+        if ($response->getStatusCode() == 200 && isset($response[0])) {
+            $location = $response[0];
+            return $this->_connection->request('GET', $location);
+        } 
+        return false;
     }
 
     /**
