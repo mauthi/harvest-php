@@ -65,6 +65,17 @@ class Clients extends AbstractResource implements ResourceInterface
         return parent::create();
     }
 
+    /**
+     * @param array $data
+     * @return string 
+     */
+    public function updateOrCreateClient($id, array $data) {
+        if (is_null($id))
+            return $this->createClient($data);
+        else
+            return $this->updateClient($id, $data);
+    }
+
 
     /**
      * @param array $data
