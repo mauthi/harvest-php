@@ -84,9 +84,12 @@ class Connection
         $options['headers']['Content-Type'] = 'application/json';
         $options['headers']['Accept'] = 'application/json';
         $options['headers']['Authorization'] = 'Basic (' . base64_encode( $this->_options['username'] . ":" . $this->_options['password'] ). ')';
-        $request = $client->request($method, $url, $options);
+        $response = $client->request($method, $url, $options);
 
-        return (string)$request->getBody();
+        if ($method == "POST")
+            return $response->getHeader("Location");
+
+        return (string)$response->getBody();
     }
 
     /**

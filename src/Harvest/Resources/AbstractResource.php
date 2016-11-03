@@ -36,13 +36,17 @@ abstract class AbstractResource
     }
 
     /**
-     * @return integer Id of created object
+     * @return array Array of created resource or false if no location is returned
      */
     public function create()
     {
         $options = array();
         $options['json'] = $this->_data;
         $result = $this->_connection->request('POST', $this->_uri, $options);
+        if (isset($result[0])) {
+            $location = $result[0];
+            return $this->_connection->request('GET', $location);
+        } 
         return $result;
     }
 
