@@ -55,4 +55,40 @@ class Projects extends AbstractResource implements ResourceInterface
 
         return $actives;
     }
+
+    /**
+     * @param array $data
+     * @return string 
+     */
+    public function createProject(array $data) {
+        $this->_uri = self::HARVEST_PATH;
+
+        $this->_data = array();
+        $this->_data[self::RESOURCE_NAME] = $data;
+        return parent::create();
+    }
+
+    /**
+     * @param array $data
+     * @return string 
+     */
+    public function updateOrCreateProject($id, array $data) {
+        if (is_null($id))
+            return $this->createProject($data);
+        else
+            return $this->updateProject($id, $data);
+    }
+
+
+    /**
+     * @param array $data
+     * @return string 
+     */
+    public function updateProject($id, array $data) {
+        $this->_uri = self::HARVEST_PATH."/{$id}";
+
+        $this->_data = array();
+        $this->_data[self::RESOURCE_NAME] = $data;
+        return parent::update();
+    }
 }
