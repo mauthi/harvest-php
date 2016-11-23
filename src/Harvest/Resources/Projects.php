@@ -14,6 +14,7 @@ use Harvest\Api\Connection;
 class Projects extends AbstractResource implements ResourceInterface
 {
     const HARVEST_PATH = 'projects';
+    const RESOURCE_NAME = 'project';
 
     /**
      * @param integer $clientId
