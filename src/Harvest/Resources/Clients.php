@@ -55,10 +55,11 @@ class Clients extends AbstractResource implements ResourceInterface
      * @return string 
      */
     public function createClient(array $data) {
+        $this->_id = null;
         $this->_uri = self::HARVEST_PATH;
 
         $this->_data = array();
-        $this->_data[self::RESOURCE_NAME] = $data;
+        $this->_data = $data;
         return parent::create();
     }
 
@@ -79,10 +80,11 @@ class Clients extends AbstractResource implements ResourceInterface
      * @return string 
      */
     public function updateClient($id, array $data) {
-        $this->_uri = self::HARVEST_PATH."/{$id}";
+        $this->_id = $id;
+        $this->_uri = self::HARVEST_PATH;
 
         $this->_data = array();
-        $this->_data[self::RESOURCE_NAME] = $data;
+        $this->_data = $data;
         return parent::update();
     }
 }
