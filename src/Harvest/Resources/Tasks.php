@@ -20,11 +20,8 @@ class Tasks extends AbstractResource implements ResourceInterface
      */
     public function getAll($updatedSince = null)
     {
-        $newUri = null;
-
-        $newUri = '?' . http_build_query(array('updated_since' => $this->_appendUpdatedSinceParam($updatedSince)));
-
-        $this->_uri = self::HARVEST_PATH . $newUri;
+        $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_uri = self::HARVEST_PATH;
         return parent::getAll();
     }
 

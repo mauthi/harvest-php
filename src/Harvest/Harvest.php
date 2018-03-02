@@ -5,8 +5,8 @@ use Harvest\Api\Connection;
 use Harvest\Resources\Tasks;
 use Harvest\Resources\Clients;
 use Harvest\Resources\Projects;
-use Harvest\Resources\Timesheets;
-use Harvest\Resources\Timereports;
+use Harvest\Resources\TimeEntries;
+use Harvest\Exceptions\HarvestException;
 
 /**
  * Class Harvest
@@ -30,8 +30,8 @@ class Harvest
         $this->projects = new Projects($this->_connection);
         $this->clients = new Clients($this->_connection);
         $this->tasks = new Tasks($this->_connection);
-        $this->timesheets = new Timesheets($this->_connection);
-        $this->timereports = new Timereports($this->_connection);
+        $this->time_entries = new TimeEntries($this->_connection);
+
     }
 
     /**
@@ -59,11 +59,19 @@ class Harvest
     }
 
     /**
+     * @return TimeEntries
+     */
+    public function getTimeEntries()
+    {
+        return $this->time_entries;
+    }
+
+    /**
      * @return Timesheets
      */
     public function getTimesheets()
     {
-        return $this->timesheets;
+        throw new HarvestException("Ressource 'Timesheets' is deprecated!");
     }
 
     /**
@@ -71,6 +79,6 @@ class Harvest
      */
     public function getTimereports()
     {
-        return $this->timereports;
+        throw new HarvestException("Ressource 'Timereports' is deprecated!");
     }
 }

@@ -11,11 +11,9 @@ use Harvest\Api\Connection;
  * @namespace    Harvest\Resources
  * @author     Joridos <joridoss@gmail.com>
  */
-class Timereports extends AbstractResource implements ResourceInterface
+class Timereports extends TimeEntries implements ResourceInterface
 {
     const HARVEST_PATH = 'entries';
-    const HARVEST_PATH_FOR_PROJECTS = 'projects';
-    const HARVEST_PATH_FOR_USERS = 'people';
 
     /**
      * @param string $basePath
@@ -26,14 +24,10 @@ class Timereports extends AbstractResource implements ResourceInterface
      */
     private function getAllWithParams($basePath, $dateFrom, $dateTo = null, $updatedSince = null)
     {
-        $newUri = null;
-
-        if (is_null($dateTo))
-            $dateTo = date("Ymd");
-
-        $newUri = '?' . http_build_query(array('from' => $dateFrom, 'to' => $dateTo, 'updated_since' => $this->_appendUpdatedSinceParam($updatedSince)));
-
-        $this->_uri = $basePath . self::HARVEST_PATH . $newUri;
+        $this->_params["from"] = $dateFrom;
+        $this->_params["to"] = $dateTo;
+        $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_uri = self::HARVEST_PATH;
         return parent::getAll();
     }
 
@@ -46,7 +40,7 @@ class Timereports extends AbstractResource implements ResourceInterface
      */
     public function getAllForUser($userId, $dateFrom, $dateTo = null, $updatedSince = null)
     {
-        $basePath = self::HARVEST_PATH_FOR_USERS . "/{$userId}/";
+        $this->_params["user_id"] = $userId;
         return $this->getAllWithParams($basePath, $dateFrom, $dateTo, $updatedSince);
     }
 
@@ -59,7 +53,7 @@ class Timereports extends AbstractResource implements ResourceInterface
      */
     public function getAllForProject($projectId, $dateFrom, $dateTo = null, $updatedSince = null)
     {
-        $basePath = self::HARVEST_PATH_FOR_PROJECTS . "/{$projectId}/";
+        $this->_params["project_id"] = $projectId;
         return $this->getAllWithParams($basePath, $dateFrom, $dateTo, $updatedSince);
     }
 
