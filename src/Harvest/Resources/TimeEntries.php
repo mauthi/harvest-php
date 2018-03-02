@@ -11,7 +11,7 @@ use Harvest\Api\Connection;
  * @namespace    Harvest\Resources
  * @author     Joridos <joridoss@gmail.com>
  */
-class Timereports extends TimeEntries implements ResourceInterface
+class TimeEntries extends TimeEntries implements ResourceInterface
 {
     const HARVEST_PATH = 'entries';
 

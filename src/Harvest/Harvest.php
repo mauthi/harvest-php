@@ -71,14 +71,13 @@ class Harvest
      */
     public function getTimesheets()
     {
-        throw new HarvestException("Ressource 'Timesheets' is deprecated!");
+        throw new HarvestException("Resource 'Timesheets' is deprecated!");
     }
 
     /**
      * @return Timesheets
      */
     public function getTimereports()
-    {
-        throw new HarvestException("Ressource 'Timereports' is deprecated!");
+    {        throw new HarvestException("Resource 'Timereports' is deprecated!");
     }
 }
