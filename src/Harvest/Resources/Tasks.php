@@ -30,12 +30,8 @@ class Tasks extends AbstractResource implements ResourceInterface
      */
     public function getInactive()
     {
-        $all = json_decode($this->getAll(), true);
-        $actives = array_filter($all, function ($data) {
-            return $data['task']['deactivated'] == true;
-        });
-
-        return $actives;
+        $this->_params["is_active"] = false;
+        return $this->getAll();
     }
 
     /**
@@ -43,12 +39,8 @@ class Tasks extends AbstractResource implements ResourceInterface
      */
     public function getActive()
     {
-        $all = json_decode($this->getAll(), true);
-        $actives = array_filter($all, function ($data) {
-            return $data['task']['deactivated'] == false;
-        });
-
-        return $actives;
+        $this->_params["is_active"] = true;
+        return $this->getAll();
     }
 
 }
