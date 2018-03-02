@@ -24,6 +24,7 @@ class Projects extends AbstractResource implements ResourceInterface
     public function getAll($clientId = null, $updatedSince = null)
     {
         $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_params["client_id"] = $clientId;
         $this->_uri = self::HARVEST_PATH;
         return parent::getAll();
     }
