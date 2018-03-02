@@ -13,9 +13,11 @@ use Harvest\Api\Connection;
  */
 abstract class AbstractResource
 {
+    const PER_PAGE = 100;
     private $_connection;
     protected $_uri;
     protected $_data;
+    protected $_params = [];
 
     /**
      * AbstractResource constructor.
@@ -25,6 +27,7 @@ abstract class AbstractResource
     {
         $this->_connection = $connection;
         $this->_uri = '';
+        $this->_params["per_page"] = self::PER_PAGE;
     }
 
     /**
@@ -32,7 +35,19 @@ abstract class AbstractResource
      */
     public function getAll()
     {
-        return $this->_connection->request('GET', $this->_uri);
+        $page = 1;
+        $aReturn = [];
+        $ressourceName = $this->_uri;
+        
+        do {
+            $this->_params["page"] = $page;
+            $uri = $this->_uri . "?" . http_build_query($this->_params);
+            $aResult = json_decode($this->_connection->request('GET', $uri));
+            $aReturn = array_merge($aReturn, $aResult->$ressourceName);
+            $page++;
+        } while ($aResult && $aResult->next_page);
+
+        return $aReturn;
     }
 
     /**
@@ -81,10 +96,10 @@ abstract class AbstractResource
     protected function _appendUpdatedSinceParam($updatedSince = null)
     {
         if( is_null($updatedSince) ) {
-            return false;
+            return null;
         } else if( $updatedSince instanceOf \DateTime ) {
             $updatedSince->setTimezone(new \DateTimeZone('Z')); // convert to correct harvest intern timezone
-            return $updatedSince->format("Y-m-d G:i:s");
+            return $updatedSince->format(\DateTime::ISO8601);
         } else {
             return $updatedSince;
         }
