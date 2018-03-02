@@ -19,9 +19,8 @@ class Connection
      * @var array
      */
     protected $_options = [
-        'username' => '',
-        'password' => '',
-        'account'  => ''
+        'account_id' => '',
+        'token' => '',
     ];
 
     /**
@@ -59,7 +58,7 @@ class Connection
         if (is_null($this->httpClient))
         {
             $this->httpClient = new GuzzleClient([
-                'base_uri' => $this->_options['account'],
+                'base_uri' => "https://api.harvestapp.com/v2/",
             ]);
         }
 
@@ -80,10 +79,11 @@ class Connection
     {
         $client = $this->getHttpClient();
         // Set headers to accept only json data.
-        $options['headers']['User-Agent'] = 'PHP Wrapper Library for Harvest API';
+        $options['headers']['User-Agent'] = 'netWERKER Management Cockpit';
         $options['headers']['Content-Type'] = 'application/json';
         $options['headers']['Accept'] = 'application/json';
-        $options['headers']['Authorization'] = 'Basic (' . base64_encode( $this->_options['username'] . ":" . $this->_options['password'] ). ')';
+        $options['headers']['Harvest-Account-Id'] = $this->_options['account_id'];
+        $options['headers']['Authorization'] = 'Bearer '.$this->_options['token'];
         $response = $client->request($method, $url, $options);
 
         switch ($method) {

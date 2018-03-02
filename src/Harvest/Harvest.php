@@ -20,13 +20,13 @@ class Harvest
 
     /**
      * Harvest constructor.
-     * @param $username
-     * @param $password
+     * @param $accountId
+     * @param $token
      * @param $account
      */
-    public function __construct($username, $password, $account)
+    public function __construct($accountId, $token)
     {
-        $this->_connection = new Connection(array( 'username' => $username, 'password' => $password, 'account' => $account));
+        $this->_connection = new Connection(array( 'account_id' => $accountId, 'token' => $token));
         $this->projects = new Projects($this->_connection);
         $this->clients = new Clients($this->_connection);
         $this->tasks = new Tasks($this->_connection);
