@@ -2,8 +2,8 @@
 
 namespace Harvest\Resources;
 
-use GuzzleHttp\Client as GuzzleClient;
 use Harvest\Api\Connection;
+use GuzzleHttp\Client as GuzzleClient;
 
 /**
  * Class AbstractResource
@@ -18,6 +18,7 @@ abstract class AbstractResource
     protected $_uri;
     protected $_data;
     protected $_params = [];
+    protected $_id = null;
 
     /**
      * AbstractResource constructor.
@@ -50,6 +51,18 @@ abstract class AbstractResource
         return $aReturn;
     }
 
+    public function getOne($id)
+    {
+        if (!$id) {
+            return false;
+        }
+
+        $uri = $this->_uri . "/" . $id;
+        $aResult = json_decode($this->_connection->request('GET', $uri));
+        
+        return $aResult;
+    }
+
     /**
      * @return array Array of created resource or false
      */
@@ -57,20 +70,12 @@ abstract class AbstractResource
     {
         $options = array();
         $options['json'] = $this->_data;
+        
         $response = $this->_connection->request('POST', $this->_uri, $options);
-        if ($response->getStatusCode() == 201 && $location = $this->getLocationFromResponse($response)) {
-            return $this->_connection->request('GET', $location);
+
+        if ($response->getStatusCode() == 201) {
+            return json_decode((string) $response->getBody());
         } 
-        return false;
-    }
-
-
-    private function getLocationFromResponse($response) 
-    {
-        $aLocation = $response->getHeader("Location");
-        if (isset($aLocation[0]))
-            return $aLocation[0];
-
         return false;
     }
 
@@ -80,11 +85,18 @@ abstract class AbstractResource
      */
     public function update()
     {
+        if (!$this->_id) {
+            return false;
+        }
+
+        $uri = $this->_uri . "/" . $this->_id;
+            
         $options = array();
         $options['json'] = $this->_data;
-        $response = $this->_connection->request('PUT', $this->_uri, $options);
-        if ($response->getStatusCode() == 200 && $location = $this->getLocationFromResponse($response)) {
-            return $this->_connection->request('GET', $location);
+        $response = $this->_connection->request('PUT', $uri, $options);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode((string) $response->getBody());
         } 
         return false;
     }
