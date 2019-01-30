@@ -13,7 +13,7 @@ use Harvest\Api\Connection;
  */
 class TimeEntries extends AbstractResource implements ResourceInterface 
 {
-    const HARVEST_PATH = 'entries';
+    const HARVEST_PATH = 'time_entries';
 
     /**
      * @param string $basePath
@@ -22,7 +22,7 @@ class TimeEntries extends AbstractResource implements ResourceInterface
      * @param string|DateTime $updatedSince
      * @return string
      */
-    private function getAllWithParams($basePath, $dateFrom, $dateTo = null, $updatedSince = null)
+    private function getAllWithParams($dateFrom, $dateTo = null, $updatedSince = null)
     {
         $this->_params["from"] = $dateFrom;
         $this->_params["to"] = $dateTo;
@@ -41,7 +41,7 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     public function getAllForUser($userId, $dateFrom, $dateTo = null, $updatedSince = null)
     {
         $this->_params["user_id"] = $userId;
-        return $this->getAllWithParams($basePath, $dateFrom, $dateTo, $updatedSince);
+        return $this->getAllWithParams($dateFrom, $dateTo, $updatedSince);
     }
 
     /**
@@ -54,7 +54,7 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     public function getAllForProject($projectId, $dateFrom, $dateTo = null, $updatedSince = null)
     {
         $this->_params["project_id"] = $projectId;
-        return $this->getAllWithParams($basePath, $dateFrom, $dateTo, $updatedSince);
+        return $this->getAllWithParams($dateFrom, $dateTo, $updatedSince);
     }
 
     /**
