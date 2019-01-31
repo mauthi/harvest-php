@@ -89,6 +89,7 @@ class Connection
 
         switch ($response->getStatusCode()) {
             case 200:
+            case 201:
                 // everything ok
                 switch ($method) {
                     case "POST":
@@ -99,13 +100,6 @@ class Connection
                 }
                 break;
 
-            case 429:
-                // retry 
-                echo $response->getHeader('Retry-After');
-                // sleep($response->getHeader('Retry-After'));
-                // $this->request($method, $url, $options);
-                throw new HarvestException("Retry after reached = ".$response->getHeader('Retry-After')."\nUrl: ".$url);
-                
             default:
                 // all other cases
                 throw new HarvestException("Status Code of Response = ".$response->getStatusCode()."\nUrl: ".$url);
