@@ -16,45 +16,14 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     const HARVEST_PATH = 'time_entries';
 
     /**
-     * @param string $basePath
-     * @param string $dateFrom
-     * @param string $dateTo
      * @param string|DateTime $updatedSince
      * @return string
      */
-    private function getAllWithParams($dateFrom, $dateTo = null, $updatedSince = null)
+    public function getAll($updatedSince = null)
     {
-        $this->_params["from"] = $dateFrom;
-        $this->_params["to"] = $dateTo;
         $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
         return parent::getAll();
-    }
-
-    /**
-     * @param integer $userId
-     * @param string $dateFrom
-     * @param string $dateTo
-     * @param string|DateTime $updatedSince
-     * @return string
-     */
-    public function getAllForUser($userId, $dateFrom, $dateTo = null, $updatedSince = null)
-    {
-        $this->_params["user_id"] = $userId;
-        return $this->getAllWithParams($dateFrom, $dateTo, $updatedSince);
-    }
-
-    /**
-     * @param integer $projectId
-     * @param string $dateFrom
-     * @param string $dateTo
-     * @param string|DateTime $updatedSince
-     * @return string
-     */
-    public function getAllForProject($projectId, $dateFrom, $dateTo = null, $updatedSince = null)
-    {
-        $this->_params["project_id"] = $projectId;
-        return $this->getAllWithParams($dateFrom, $dateTo, $updatedSince);
     }
 
     /**
