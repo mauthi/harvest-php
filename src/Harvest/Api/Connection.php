@@ -3,6 +3,7 @@ namespace Harvest\Api;
 
 use GuzzleHttp\Client as GuzzleClient;
 use Exception, InvalidArgumentException;
+use Harvest\Exceptions\HarvestException;
 use GuzzleHttp\Exception\ClientException;
 
 /**
@@ -86,14 +87,31 @@ class Connection
         $options['headers']['Authorization'] = 'Bearer '.$this->_options['token'];
         $response = $client->request($method, $url, $options);
 
-        switch ($method) {
-            case "POST":
-            case "PUT":
-                return $response;
+        switch ($response->getStatusCode()) {
+            case 200:
+                // everything ok
+                switch ($method) {
+                    case "POST":
+                    case "PUT":
+                        return $response;
+                    default:
+                        return (string)$response->getBody();
+                }
+                break;
+
+            case 429:
+                // retry 
+                echo $response->getHeader('Retry-After');
+                // sleep($response->getHeader('Retry-After'));
+                // $this->request($method, $url, $options);
+                throw new HarvestException("Retry after reached = ".$response->getHeader('Retry-After')."\nUrl: ".$url);
+                
             default:
-                return (string)$response->getBody();
-            
+                // all other cases
+                throw new HarvestException("Status Code of Response = ".$response->getStatusCode()."\nUrl: ".$url);
         }
+
+        
     }
 
     /**
