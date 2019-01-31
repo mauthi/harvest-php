@@ -1,7 +1,9 @@
 <?php
 namespace Harvest\Api;
 
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleRetry\GuzzleRetryMiddleware;
 use Exception, InvalidArgumentException;
 use Harvest\Exceptions\HarvestException;
 use GuzzleHttp\Exception\ClientException;
@@ -58,7 +60,10 @@ class Connection
     {
         if (is_null($this->httpClient))
         {
+            $stack = HandlerStack::create();
+            $stack->push(GuzzleRetryMiddleware::factory());
             $this->httpClient = new GuzzleClient([
+                'handler' => $stack,
                 'base_uri' => "https://api.harvestapp.com/v2/",
             ]);
         }
