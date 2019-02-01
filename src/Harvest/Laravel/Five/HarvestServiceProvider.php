@@ -31,7 +31,7 @@ class HarvestServiceProvider extends ServiceProvider {
         $this->app->singleton(Harvest::class, function($app) use ($options)
         {
             $harvest = $app['config']['services.harvest'];
-            return new Harvest($harvest['account_id'], $harvest['token'], $fastbill['debug']);
+            return new Harvest($harvest['account_id'], $harvest['token'], $harvest['debug']);
         });
     }
 
