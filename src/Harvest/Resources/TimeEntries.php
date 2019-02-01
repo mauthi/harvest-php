@@ -27,6 +27,18 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     }
 
     /**
+     * @param int $page
+     * @param string|DateTime $updatedSince
+     * @return string
+     */
+    public function getPage(int $page, $updatedSince = null)
+    {
+        $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_uri = self::HARVEST_PATH;
+        return parent::getPage($page);
+    }
+
+    /**
      * @return string
      */
     public function getInactive()

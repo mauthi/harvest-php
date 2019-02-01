@@ -11,6 +11,7 @@ namespace Harvest\Resources;
 interface ResourceInterface
 {
     public function getAll();
+    public function getPage(int $page);
     public function getInactive();
     public function getActive();
     public function create();

@@ -51,6 +51,21 @@ abstract class AbstractResource
         return $aReturn;
     }
 
+
+    /**
+     * @return string
+     */
+    public function getPage(int $page)
+    {
+        $ressourceName = $this->_uri;
+        
+        $this->_params["page"] = $page;
+        $uri = $this->_uri . "?" . http_build_query($this->_params);
+        $aResult = json_decode($this->_connection->request('GET', $uri));
+        return $aResult->$ressourceName;
+    }
+
+
     public function getOne($id)
     {
         if (!$id) {
