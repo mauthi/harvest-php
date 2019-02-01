@@ -24,9 +24,9 @@ class Harvest
      * @param $token
      * @param $account
      */
-    public function __construct($accountId, $token)
+    public function __construct($accountId, $token, $_debug = false)
     {
-        $this->_connection = new Connection(array( 'account_id' => $accountId, 'token' => $token));
+        $this->_connection = new Connection(array( 'account_id' => $accountId, 'token' => $token, 'debug' => $_debug));
         $this->projects = new Projects($this->_connection);
         $this->clients = new Clients($this->_connection);
         $this->tasks = new Tasks($this->_connection);

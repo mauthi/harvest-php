@@ -24,6 +24,7 @@ class Connection
     protected $_options = [
         'account_id' => '',
         'token' => '',
+        'debug' => false,
     ];
 
     /**
@@ -65,6 +66,18 @@ class Connection
             $this->httpClient = new GuzzleClient([
                 'handler' => $stack,
                 'base_uri' => "https://api.harvestapp.com/v2/",
+                'on_retry_callback' => function($attemptNumber, $delay, $request, $options, $response) {
+    
+                    if ($this->getOption("debug")) {
+                        echo sprintf(
+                            "Retrying request to %s.  Server responded with %s.  Will wait %s seconds.  This is attempt #%s\n",
+                            $request->getUri()->getPath(),
+                            $response->getStatusCode(),
+                            number_format($delay, 2),
+                            $attemptNumber
+                        );
+                    }
+                },
             ]);
         }
 
