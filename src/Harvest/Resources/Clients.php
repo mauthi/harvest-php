@@ -52,7 +52,7 @@ class Clients extends AbstractResource implements ResourceInterface
 
     /**
      * @param array $data
-     * @return string 
+     * @return \stdClass|boolean 
      */
     public function createClient(array $data) {
         $this->_id = null;
@@ -64,10 +64,11 @@ class Clients extends AbstractResource implements ResourceInterface
     }
 
     /**
+     * @param int $id
      * @param array $data
-     * @return string 
+     * @return \stdClass|boolean 
      */
-    public function updateOrCreateClient($id, array $data) {
+    public function updateOrCreateClient(int $id, array $data) {
         if (is_null($id))
             return $this->createClient($data);
         else
@@ -76,10 +77,11 @@ class Clients extends AbstractResource implements ResourceInterface
 
 
     /**
+     * @param int $id
      * @param array $data
-     * @return string 
+     * @return \stdClass|boolean
      */
-    public function updateClient($id, array $data) {
+    public function updateClient(int $id, array $data) {
         $this->_id = $id;
         $this->_uri = self::HARVEST_PATH;
 

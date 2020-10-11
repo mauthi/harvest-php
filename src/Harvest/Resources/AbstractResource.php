@@ -79,7 +79,7 @@ abstract class AbstractResource
     }
 
     /**
-     * @return array Array of created resource or false
+     * @return \stdClass|boolean Array of created resource or false
      */
     public function create()
     {
@@ -96,7 +96,7 @@ abstract class AbstractResource
 
 
     /**
-     * @return array Array of updated resource or false
+     * @return \stdClass|boolean Array of updated resource or false
      */
     public function update()
     {
