@@ -57,7 +57,7 @@ class Projects extends AbstractResource implements ResourceInterface
 
     /**
      * @param array $data
-     * @return string 
+     * @return \stdClass|boolean 
      */
     public function createProject(array $data) {
         $this->_id = null;
@@ -69,10 +69,11 @@ class Projects extends AbstractResource implements ResourceInterface
     }
 
     /**
+     * @param int $id
      * @param array $data
-     * @return string 
+     * @return \stdClass|boolean 
      */
-    public function updateOrCreateProject($id, array $data) {
+    public function updateOrCreateProject(int $id, array $data) {
         if (is_null($id))
             return $this->createProject($data);
         else
@@ -81,10 +82,11 @@ class Projects extends AbstractResource implements ResourceInterface
 
 
     /**
+     * @param int $id
      * @param array $data
-     * @return string 
+     * @return \stdClass|boolean 
      */
-    public function updateProject($id, array $data) {
+    public function updateProject(int $id, array $data) {
         $this->_id = $id;
         $this->_uri = self::HARVEST_PATH;
 
