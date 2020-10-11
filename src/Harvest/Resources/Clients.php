@@ -14,10 +14,10 @@ class Clients extends AbstractResource implements ResourceInterface
     const RESOURCE_NAME = 'client';
 
 	/**
-     * @param string|DateTime $updatedSince
-     * @return string
+     * @param string|\DateTime $updatedSince
+     * @return array
      */
-    public function getAll($updatedSince = null)
+    public function getAll($updatedSince = null): array
     {
         $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
@@ -25,9 +25,9 @@ class Clients extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getInactive()
+    public function getInactive(): array
     {
         $all = json_decode($this->getAll(), true);
         $actives = array_filter($all, function ($data) {
@@ -38,9 +38,9 @@ class Clients extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getActive()
+    public function getActive(): array
     {
         $all = json_decode($this->getAll(), true);
         $actives = array_filter($all, function ($data) {

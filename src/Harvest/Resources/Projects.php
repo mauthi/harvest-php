@@ -18,10 +18,10 @@ class Projects extends AbstractResource implements ResourceInterface
 
     /**
      * @param integer $clientId
-     * @param string|DateTime $updatedSince
-     * @return string
+     * @param string|\DateTime $updatedSince
+     * @return array
      */
-    public function getAll($clientId = null, $updatedSince = null)
+    public function getAll($clientId = null, $updatedSince = null): array
     {
         $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_params["client_id"] = $clientId;
@@ -30,9 +30,9 @@ class Projects extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getInactive()
+    public function getInactive(): array
     {
         $all = json_decode($this->getAll(), true);
         $actives = array_filter($all, function ($data) {
@@ -43,9 +43,9 @@ class Projects extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getActive()
+    public function getActive(): array
     {
         $all = json_decode($this->getAll(), true);
         $actives = array_filter($all, function ($data) {

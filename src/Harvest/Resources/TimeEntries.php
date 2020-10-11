@@ -17,9 +17,9 @@ class TimeEntries extends AbstractResource implements ResourceInterface
 
     /**
      * @param string|DateTime $updatedSince
-     * @return string
+     * @return array
      */
-    public function getAll($updatedSince = null)
+    public function getAll($updatedSince = null): array
     {
         $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
@@ -29,9 +29,9 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     /**
      * @param int $page
      * @param string|DateTime $updatedSince
-     * @return string
+     * @return array
      */
-    public function getPage(int $page, $updatedSince = null)
+    public function getPage(int $page, $updatedSince = null): array
     {
         $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
@@ -39,18 +39,18 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getInactive()
+    public function getInactive(): array
     {
         // not available for this resource - so return empty string
         return "";
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getActive()
+    public function getActive(): array
     {
         // not available for this resource - so return empty string
         return "";

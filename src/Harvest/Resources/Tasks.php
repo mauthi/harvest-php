@@ -15,10 +15,10 @@ class Tasks extends AbstractResource implements ResourceInterface
     const HARVEST_PATH = 'tasks';
 
 	/**
-     * @param string|DateTime $updatedSince
-     * @return string
+     * @param string|\DateTime $updatedSince
+     * @return array
      */
-    public function getAll($updatedSince = null)
+    public function getAll($updatedSince = null): array
     {
         $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
@@ -26,18 +26,18 @@ class Tasks extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getInactive()
+    public function getInactive(): array
     {
         $this->_params["is_active"] = false;
         return $this->getAll();
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getActive()
+    public function getActive(): array
     {
         $this->_params["is_active"] = true;
         return $this->getAll();

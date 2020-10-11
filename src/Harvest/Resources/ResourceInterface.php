@@ -10,10 +10,10 @@ namespace Harvest\Resources;
  */
 interface ResourceInterface
 {
-    public function getAll();
-    public function getPage(int $page);
-    public function getInactive();
-    public function getActive();
+    public function getAll(): array;
+    public function getPage(int $page): array;
+    public function getInactive(): array;
+    public function getActive(): array;
     public function create();
     public function update();
 }

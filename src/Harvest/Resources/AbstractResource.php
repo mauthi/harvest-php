@@ -32,9 +32,9 @@ abstract class AbstractResource
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getAll()
+    public function getAll(): array
     {
         $page = 1;
         $aReturn = [];
@@ -53,9 +53,9 @@ abstract class AbstractResource
 
 
     /**
-     * @return string
+     * @return array
      */
-    public function getPage(int $page)
+    public function getPage(int $page): array
     {
         $ressourceName = $this->_uri;
         
