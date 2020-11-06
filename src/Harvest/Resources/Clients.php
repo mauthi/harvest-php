@@ -68,7 +68,7 @@ class Clients extends AbstractResource implements ResourceInterface
      * @param array $data
      * @return \stdClass|boolean 
      */
-    public function updateOrCreateClient(int $id, array $data) {
+    public function updateOrCreateClient(?int $id, array $data) {
         if (is_null($id))
             return $this->createClient($data);
         else

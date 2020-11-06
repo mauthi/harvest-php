@@ -73,7 +73,7 @@ class Projects extends AbstractResource implements ResourceInterface
      * @param array $data
      * @return \stdClass|boolean 
      */
-    public function updateOrCreateProject(int $id, array $data) {
+    public function updateOrCreateProject(?int $id, array $data) {
         if (is_null($id))
             return $this->createProject($data);
         else
