@@ -3,7 +3,7 @@
 namespace Harvest\Resources;
 
 /**
- * Interface ResourceInterface
+ * Interface ResourceInterface.
  *
  * @namespace    Harvest\Resources
  * @author     Joridos <joridoss@gmail.com>
@@ -11,9 +11,14 @@ namespace Harvest\Resources;
 interface ResourceInterface
 {
     public function getAll(): array;
+
     public function getPage(int $page): array;
+
     public function getInactive(): array;
+
     public function getActive(): array;
+
     public function create();
+
     public function update();
 }

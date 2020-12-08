@@ -3,24 +3,25 @@
 namespace Harvest\Resources;
 
 /**
- * Class Clients
+ * Class Clients.
  *
  * @namespace    Harvest\Resources
  * @author     Joridos <joridoss@gmail.com>
  */
 class Clients extends AbstractResource implements ResourceInterface
 {
-	const HARVEST_PATH = 'clients';
+    const HARVEST_PATH = 'clients';
     const RESOURCE_NAME = 'client';
 
-	/**
+    /**
      * @param string|\DateTime $updatedSince
      * @return array
      */
     public function getAll($updatedSince = null): array
     {
-        $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_params['updated_since'] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
+
         return parent::getAll();
     }
 
@@ -52,41 +53,46 @@ class Clients extends AbstractResource implements ResourceInterface
 
     /**
      * @param array $data
-     * @return \stdClass|boolean 
+     * @return \stdClass|bool
      */
-    public function createClient(array $data) {
+    public function createClient(array $data)
+    {
         $this->_id = null;
         $this->_uri = self::HARVEST_PATH;
 
-        $this->_data = array();
+        $this->_data = [];
         $this->_data = $data;
+
         return parent::create();
     }
 
     /**
      * @param int $id
      * @param array $data
-     * @return \stdClass|boolean 
+     * @return \stdClass|bool
      */
-    public function updateOrCreateClient(?int $id, array $data) {
-        if (is_null($id))
+    public function updateOrCreateClient(?int $id, array $data)
+    {
+        if (is_null($id)) {
             return $this->createClient($data);
-        else
+        } else {
             return $this->updateClient($id, $data);
+        }
     }
-
 
     /**
      * @param int $id
      * @param array $data
-     * @return \stdClass|boolean
+     * @return \stdClass|bool
      */
-    public function updateClient(int $id, array $data) {
+    public function updateClient(int $id, array $data)
+    {
         $this->_id = $id;
         $this->_uri = self::HARVEST_PATH;
 
-        $this->_data = array();
+        $this->_data = [];
         $this->_data = $data;
+
         return parent::update();
     }
 }

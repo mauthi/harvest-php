@@ -1,15 +1,17 @@
 <?php
+
 namespace Harvest\Api;
 
-use GuzzleHttp\HandlerStack;
+use Exception;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleRetry\GuzzleRetryMiddleware;
-use Exception, InvalidArgumentException;
-use Harvest\Exceptions\HarvestException;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\HandlerStack;
+use GuzzleRetry\GuzzleRetryMiddleware;
+use Harvest\Exceptions\HarvestException;
+use InvalidArgumentException;
 
 /**
- * Class Connection
+ * Class Connection.
  *
  * @namespace    Harvest\Api
  * @author     Joridos <joridoss@gmail.com>
@@ -37,7 +39,7 @@ class Connection
     /**
      * @param array $options
      */
-    function __construct($options = [])
+    public function __construct($options = [])
     {
         $this->setOptions($options);
     }
@@ -59,16 +61,14 @@ class Connection
      */
     public function getHttpClient()
     {
-        if (is_null($this->httpClient))
-        {
+        if (is_null($this->httpClient)) {
             $stack = HandlerStack::create();
             $stack->push(GuzzleRetryMiddleware::factory());
             $this->httpClient = new GuzzleClient([
                 'handler' => $stack,
-                'base_uri' => "https://api.harvestapp.com/v2/",
-                'on_retry_callback' => function($attemptNumber, $delay, $request, $options, $response) {
-    
-                    if ($this->getOption("debug")) {
+                'base_uri' => 'https://api.harvestapp.com/v2/',
+                'on_retry_callback' => function ($attemptNumber, $delay, $request, $options, $response) {
+                    if ($this->getOption('debug')) {
                         echo sprintf(
                             "Retrying request to %s.  Server responded with %s.  Will wait %s seconds.  This is attempt #%s\n",
                             $request->getUri()->getPath(),
@@ -110,20 +110,18 @@ class Connection
             case 201:
                 // everything ok
                 switch ($method) {
-                    case "POST":
-                    case "PUT":
+                    case 'POST':
+                    case 'PUT':
                         return $response;
                     default:
-                        return (string)$response->getBody();
+                        return (string) $response->getBody();
                 }
                 break;
 
             default:
                 // all other cases
-                throw new HarvestException("Status Code of Response = ".$response->getStatusCode()."\nUrl: ".$url);
+                throw new HarvestException('Status Code of Response = '.$response->getStatusCode()."\nUrl: ".$url);
         }
-
-        
     }
 
     /**
@@ -145,7 +143,7 @@ class Connection
      */
     public function getOption($option)
     {
-        if ( !array_key_exists($option, $this->_options)) {
+        if (!array_key_exists($option, $this->_options)) {
             throw new Exception("The requested option [$option] has not been set or is not a valid option key.");
         }
 

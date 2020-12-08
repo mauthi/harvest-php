@@ -6,24 +6,35 @@ use DateTime;
 use Harvest\Api\Connection;
 
 /**
- * Class Projects
+ * Class Projects.
  *
  * @namespace    Harvest\Resources
  * @author     Joridos <joridoss@gmail.com>
  */
-class TimeEntries extends AbstractResource implements ResourceInterface 
+class TimeEntries extends AbstractResource implements ResourceInterface
 {
     const HARVEST_PATH = 'time_entries';
 
     /**
      * @param string|DateTime $updatedSince
-     * @return array
      */
     public function getAll($updatedSince = null): array
     {
-        $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_params['updated_since'] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
+
         return parent::getAll();
+    }
+
+    /**
+     * @param string|DateTime $updatedSince
+     */
+    public function getCount($updatedSince = null, array $params = []): int
+    {
+        $this->_params['updated_since'] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_uri = self::HARVEST_PATH;
+
+        return parent::getCount($params);
     }
 
     /**
@@ -31,11 +42,12 @@ class TimeEntries extends AbstractResource implements ResourceInterface
      * @param string|DateTime $updatedSince
      * @return array
      */
-    public function getPage(int $page, $updatedSince = null): array
+    public function getPage(int $page, $updatedSince = null, array $params = []): array
     {
-        $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_params['updated_since'] = $this->_appendUpdatedSinceParam($updatedSince);
         $this->_uri = self::HARVEST_PATH;
-        return parent::getPage($page);
+
+        return parent::getPage($page, $params);
     }
 
     /**
@@ -44,7 +56,7 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     public function getInactive(): array
     {
         // not available for this resource - so return empty string
-        return "";
+        return '';
     }
 
     /**
@@ -53,6 +65,6 @@ class TimeEntries extends AbstractResource implements ResourceInterface
     public function getActive(): array
     {
         // not available for this resource - so return empty string
-        return "";
+        return '';
     }
 }

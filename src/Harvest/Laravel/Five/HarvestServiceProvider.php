@@ -1,17 +1,18 @@
 <?php
+
 namespace Harvest\Laravel\Five;
 
-use Illuminate\Support\ServiceProvider;
 use Harvest\Harvest;
+use Illuminate\Support\ServiceProvider;
 
 /**
- * Class HarvestServiceProvider
+ * Class HarvestServiceProvider.
  *
  * @namespace    Harvest\Laravel\Five
  * @author     Joridos <joridoss@gmail.com>
  */
-class HarvestServiceProvider extends ServiceProvider {
-
+class HarvestServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -28,9 +29,9 @@ class HarvestServiceProvider extends ServiceProvider {
     {
         $options = $this->app['config']['services.harvest'];
 
-        $this->app->singleton(Harvest::class, function($app) use ($options)
-        {
+        $this->app->singleton(Harvest::class, function ($app) use ($options) {
             $harvest = $app['config']['services.harvest'];
+
             return new Harvest($harvest['account_id'], $harvest['token'], $harvest['debug']);
         });
     }
@@ -44,5 +45,4 @@ class HarvestServiceProvider extends ServiceProvider {
     {
         return [Harvest::class];
     }
-
 }

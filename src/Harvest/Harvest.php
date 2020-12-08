@@ -1,15 +1,16 @@
 <?php
+
 namespace Harvest;
 
 use Harvest\Api\Connection;
-use Harvest\Resources\Tasks;
+use Harvest\Exceptions\HarvestException;
 use Harvest\Resources\Clients;
 use Harvest\Resources\Projects;
+use Harvest\Resources\Tasks;
 use Harvest\Resources\TimeEntries;
-use Harvest\Exceptions\HarvestException;
 
 /**
- * Class Harvest
+ * Class Harvest.
  *
  * @namespace    Harvest
  * @author     Joridos <joridoss@gmail.com>
@@ -26,12 +27,11 @@ class Harvest
      */
     public function __construct($accountId, $token, $_debug = false)
     {
-        $this->_connection = new Connection(array( 'account_id' => $accountId, 'token' => $token, 'debug' => $_debug));
+        $this->_connection = new Connection(['account_id' => $accountId, 'token' => $token, 'debug' => $_debug]);
         $this->projects = new Projects($this->_connection);
         $this->clients = new Clients($this->_connection);
         $this->tasks = new Tasks($this->_connection);
         $this->time_entries = new TimeEntries($this->_connection);
-
     }
 
     /**
@@ -78,6 +78,7 @@ class Harvest
      * @return Timesheets
      */
     public function getTimereports()
-    {        throw new HarvestException("Resource 'Timereports' is deprecated!");
+    {
+        throw new HarvestException("Resource 'Timereports' is deprecated!");
     }
 }

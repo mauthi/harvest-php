@@ -6,7 +6,7 @@ use DateTime;
 use Harvest\Api\Connection;
 
 /**
- * Class Projects
+ * Class Projects.
  *
  * @namespace    Harvest\Resources
  * @author     Joridos <joridoss@gmail.com>
@@ -17,15 +17,16 @@ class Projects extends AbstractResource implements ResourceInterface
     const RESOURCE_NAME = 'project';
 
     /**
-     * @param integer $clientId
+     * @param int $clientId
      * @param string|\DateTime $updatedSince
      * @return array
      */
     public function getAll($clientId = null, $updatedSince = null): array
     {
-        $this->_params["updated_since"] = $this->_appendUpdatedSinceParam($updatedSince);
-        $this->_params["client_id"] = $clientId;
+        $this->_params['updated_since'] = $this->_appendUpdatedSinceParam($updatedSince);
+        $this->_params['client_id'] = $clientId;
         $this->_uri = self::HARVEST_PATH;
+
         return parent::getAll();
     }
 
@@ -57,41 +58,46 @@ class Projects extends AbstractResource implements ResourceInterface
 
     /**
      * @param array $data
-     * @return \stdClass|boolean 
+     * @return \stdClass|bool
      */
-    public function createProject(array $data) {
+    public function createProject(array $data)
+    {
         $this->_id = null;
         $this->_uri = self::HARVEST_PATH;
 
-        $this->_data = array();
+        $this->_data = [];
         $this->_data = $data;
+
         return parent::create();
     }
 
     /**
      * @param int $id
      * @param array $data
-     * @return \stdClass|boolean 
+     * @return \stdClass|bool
      */
-    public function updateOrCreateProject(?int $id, array $data) {
-        if (is_null($id))
+    public function updateOrCreateProject(?int $id, array $data)
+    {
+        if (is_null($id)) {
             return $this->createProject($data);
-        else
+        } else {
             return $this->updateProject($id, $data);
+        }
     }
-
 
     /**
      * @param int $id
      * @param array $data
-     * @return \stdClass|boolean 
+     * @return \stdClass|bool
      */
-    public function updateProject(int $id, array $data) {
+    public function updateProject(int $id, array $data)
+    {
         $this->_id = $id;
         $this->_uri = self::HARVEST_PATH;
 
-        $this->_data = array();
+        $this->_data = [];
         $this->_data = $data;
+
         return parent::update();
     }
 }

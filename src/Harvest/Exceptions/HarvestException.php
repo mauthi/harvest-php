@@ -3,11 +3,11 @@
 namespace Harvest\Exceptions;
 
 /**
- * Class HarvestException
+ * Class HarvestException.
  *
  * @namespace    Harvest\Exceptions
  * @author     Mauthi <mauthi@gmail.com>
  */
-class HarvestException extends \Exception {
-
+class HarvestException extends \Exception
+{
 }
