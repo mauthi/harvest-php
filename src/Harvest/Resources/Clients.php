@@ -2,6 +2,8 @@
 
 namespace Harvest\Resources;
 
+use stdClass;
+
 /**
  * Class Clients.
  *
@@ -10,8 +12,8 @@ namespace Harvest\Resources;
  */
 class Clients extends AbstractResource implements ResourceInterface
 {
-    const HARVEST_PATH = 'clients';
-    const RESOURCE_NAME = 'client';
+    public const HARVEST_PATH = 'clients';
+    public const RESOURCE_NAME = 'client';
 
     /**
      * @param string|\DateTime $updatedSince
@@ -23,6 +25,13 @@ class Clients extends AbstractResource implements ResourceInterface
         $this->_uri = self::HARVEST_PATH;
 
         return parent::getAll();
+    }
+
+    public function getOne($id): stdClass
+    {
+        $this->_uri = self::HARVEST_PATH;
+
+        return parent::getOne($id);
     }
 
     /**

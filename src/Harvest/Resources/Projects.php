@@ -4,6 +4,7 @@ namespace Harvest\Resources;
 
 use DateTime;
 use Harvest\Api\Connection;
+use stdClass;
 
 /**
  * Class Projects.
@@ -13,8 +14,8 @@ use Harvest\Api\Connection;
  */
 class Projects extends AbstractResource implements ResourceInterface
 {
-    const HARVEST_PATH = 'projects';
-    const RESOURCE_NAME = 'project';
+    public const HARVEST_PATH = 'projects';
+    public const RESOURCE_NAME = 'project';
 
     /**
      * @param int $clientId
@@ -29,6 +30,14 @@ class Projects extends AbstractResource implements ResourceInterface
 
         return parent::getAll();
     }
+
+    public function getOne($id): stdClass
+    {
+        $this->_uri = self::HARVEST_PATH;
+
+        return parent::getOne($id);
+    }
+
 
     /**
      * @return array
