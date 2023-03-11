@@ -34,6 +34,14 @@ class Clients extends AbstractResource implements ResourceInterface
         return parent::getOne($id);
     }
 
+    public function getByName(String $name): array
+    {
+        $this->_uri = self::HARVEST_PATH;
+        $this->_params['name'] = $name;
+
+        return parent::getAll();
+    }
+
     /**
      * @return array
      */

@@ -13,7 +13,7 @@ use Harvest\Api\Connection;
  */
 abstract class AbstractResource
 {
-    const PER_PAGE = 100;
+    public const PER_PAGE = 100;
     private $_connection;
     protected $_uri;
     protected $_data;
